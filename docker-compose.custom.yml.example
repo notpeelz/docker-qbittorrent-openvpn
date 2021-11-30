@@ -1,0 +1,30 @@
+services:
+  autoheal:
+    container_name: vps-torrent-autoheal
+  openvpn:
+    container_name: vps-torrent-openvpn
+    environment:
+      - OPENVPN_CONFIG_FILE=vpn.conf
+    ports:
+      # port for incoming torrent connections
+      - 6881:6881
+      # webui port
+      - 8080:8080
+  qbittorrent:
+    container_name: vps-torrent-qbittorrent
+    environment:
+      - TZ=America/New_York
+      - SET_UIDGDID=1000:1000
+      - WEBUI_VIEWTORRENT=1
+      - WEBUI_HTTPS=1
+      - WEBUI_AUTH=1
+      - WEBUI_USER=admin
+      # use hash-password.sh to generate the hash
+      - WEBUI_PASS=6BgjolEb6GHnSX/n/33YtQ==:UX/01/RmOzo9g08hQ/abqmNwz1A1wUe9x5D2Aprx91/GYj6Rolg4BvYkbFa4ayjrcwutqPrL7W5Bg3htHIWUVQ==
+      - QB_DHT=1
+      - QB_PEX=1
+      - QB_LSD=0
+      - QB_ANONYMOUS=1
+    volumes:
+      - /mnt/.torrents_config:/config
+      - /mnt/torrents:/downloads

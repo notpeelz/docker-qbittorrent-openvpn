@@ -1,0 +1,20 @@
+#!/usr/bin/with-contenv /bin/bash
+# vim:ft=sh
+
+if ! (echo "$VPN_LOG_LEVEL" | grep -Eq '^([1-9]|1[0-1])$'); then
+  echo "WARNING: invalid \$VPN_LOG_LEVEL"
+  vpn_log_level=3
+else
+  vpn_log_level=$VPN_LOG_LEVEL
+fi
+
+config_file="/data/vpn/${OPENVPN_CONFIG_FILE}"
+exec openvpn --config "$config_file" \
+  --verb "$vpn_log_level" \
+  --auth-nocache \
+  --connect-retry-max 10 \
+  --pull-filter ignore "route-ipv6" \
+  --pull-filter ignore "ifconfig-ipv6" \
+  --script-security 2 \
+  --up-restart \
+  --cd /data/vpn

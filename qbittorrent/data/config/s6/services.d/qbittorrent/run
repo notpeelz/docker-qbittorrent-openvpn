@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv /bin/bash
+# vim:ft=sh
+
+if [[ ! -z "${SET_UIDGID:+x}" ]]; then
+  exec s6-setuidgid "$SET_UIDGID" qbittorrent-nox --webui-port="$WEBUI_PORT"
+else
+  exec qbittorrent-nox --webui-port="$WEBUI_PORT"
+fi

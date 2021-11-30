@@ -1,0 +1,40 @@
+services:
+  autoheal:
+    image: willfarrell/autoheal
+    restart: always
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=docker-qbittorrent-openvpn-autoheal
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  openvpn:
+    build: ./openvpn
+    logging:
+      driver: journald
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - SUBNETS=192.168.0.0/24,192.168.1.0/24
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    volumes:
+      - ./vpn-config:/mnt/vpn-config:ro
+    restart: unless-stopped
+  qbittorrent:
+    build: ./qbittorrent
+    logging:
+      driver: journald
+    network_mode: service:openvpn
+    environment:
+      - SET_UIDGID=1000:1000
+      - TZ=America/New_York
+      - WEBUI_PORT=8080
+    volumes:
+      - ./certs:/mnt/certs:ro
+    restart: unless-stopped
+    labels:
+      docker-qbittorrent-openvpn-autoheal: true
+    healthcheck:
+      test: curl -f 1.1.1.1 || exit 1
+      interval: 1m30s
+      timeout: 2s
+      retries: 1

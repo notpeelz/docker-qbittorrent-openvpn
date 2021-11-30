@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv /bin/bash
+# vim:ft=sh
+
+rm -rf /data/vpn
+cp /mnt/vpn-config /data/vpn -r
+
+config_file="/data/vpn/${OPENVPN_CONFIG_FILE}"
+if [ -z "$config_file" ]; then
+  >&2 echo "ERROR: \$OPENVPN_CONFIG_FILE not found"
+  exit 1
+fi
+
+# these configuration file changes are required by Alpine
+sed -i \
+  -e '/up /c up \/etc\/openvpn\/up.sh' \
+  -e '/down /c down \/etc\/openvpn\/down.sh' \
+  -e 's/^proto udp$/proto udp4/' \
+  -e 's/^proto tcp$/proto tcp4/' \
+  "$config_file"

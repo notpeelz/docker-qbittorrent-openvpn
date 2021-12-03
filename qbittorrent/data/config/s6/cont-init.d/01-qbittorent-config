@@ -9,6 +9,16 @@ if [[ ! "$SET_UIDGID" =~ ^[0-9]+:[0-9]*$ ]]; then
   exit 1
 fi
 
+mounts="$(mount | grep '^/dev/' | grep -v '/etc' | awk '{print $3}')"
+if ! (echo "$mounts" | grep -q '^/config$'); then
+  echo "ERROR: /config is not mounted"
+  exit 1
+fi
+if ! (echo "$mounts" | grep -q '^/downloads$'); then
+  echo "ERROR: /downloads is not mounted"
+  exit 1
+fi
+
 chown "$SET_UIDGID" /certs -R
 
 config_dir="/config/qBittorrent/config"

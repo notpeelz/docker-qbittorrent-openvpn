@@ -77,7 +77,7 @@ bool generate_salt(unsigned char* value, int len) {
 }
 
 void handle_sigint(int s) {
-  std::exit(1);
+  std::exit(128 + SIGINT);
 }
 
 int main(int argc, char** argv) {

@@ -113,6 +113,6 @@ int main(int argc, char** argv) {
   std::string password_b64 = base64_encode(out, BUFFER_SIZE);
   std::string salt_b64 = base64_encode(salt, SALT_LENGTH);
 
-  std::cout << salt_b64 << ":" << password_b64;
+  std::cout << salt_b64 << ":" << password_b64 << std::endl;
   return 0;
 }

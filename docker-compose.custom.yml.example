@@ -15,6 +15,7 @@ services:
     environment:
       - TZ=America/New_York
       - SET_UIDGDID=1000:1000
+      - SET_UMASK=027
       - WEBUI_VIEWTORRENT=1
       - WEBUI_HTTPS=1
       - WEBUI_AUTH=1

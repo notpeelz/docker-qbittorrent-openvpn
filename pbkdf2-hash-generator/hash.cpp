@@ -8,7 +8,7 @@
 
 #define HASH_ITERATIONS (100000)
 #define HASH_METHOD (EVP_sha512())
-#define SALT_LENGTH 16
+#define SALT_LENGTH (16)
 
 static const std::string base64_chars =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
   sigemptyset(&sigint_handler.sa_mask);
   sigint_handler.sa_flags = 0;
 
-  sigaction(SIGINT, &sigint_handler, NULL);
+  sigaction(SIGINT, &sigint_handler, nullptr);
 
   unsigned char salt[SALT_LENGTH];
   if (!generate_salt(salt, SALT_LENGTH)) return 1;
@@ -95,14 +95,14 @@ int main(int argc, char** argv) {
   std::string password;
   getline(std::cin, password);
 
-  #define BUFFER_SIZE 64
-  unsigned char out[BUFFER_SIZE];
+  constexpr std::size_t buffer_size = 64;
+  unsigned char out[buffer_size];
 
   int result = PKCS5_PBKDF2_HMAC(
     password.data(), password.length(),
     (const unsigned char*) salt, SALT_LENGTH,
     HASH_ITERATIONS, HASH_METHOD,
-    BUFFER_SIZE, (unsigned char*)&out
+    buffer_size, (unsigned char*)&out
   );
 
   if (!result) {
@@ -110,7 +110,7 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  std::string password_b64 = base64_encode(out, BUFFER_SIZE);
+  std::string password_b64 = base64_encode(out, buffer_size);
   std::string salt_b64 = base64_encode(salt, SALT_LENGTH);
 
   std::cout << salt_b64 << ":" << password_b64 << std::endl;

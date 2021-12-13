@@ -26,6 +26,10 @@ services:
       - QB_PEX=1
       - QB_LSD=0
       - QB_ANONYMOUS=1
+      - QB_LIMIT_DL=3000
+      - QB_LIMIT_UP=100
+      - QB_LIMIT_ALT_DL=1500
+      - QL_LIMIT_ALT_UP=100
     volumes:
       - /mnt/.torrents_config:/config
       - /mnt/torrents:/downloads

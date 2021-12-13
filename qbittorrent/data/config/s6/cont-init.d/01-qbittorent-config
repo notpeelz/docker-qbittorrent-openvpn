@@ -99,3 +99,19 @@ if [[ "$QB_ANONYMOUS" == "0" ]]; then
 else
   set_setting 'Preferences' 'Advanced\AnonymousMode' true
 fi
+
+if [[ ! -z "$QB_LIMIT_DL" ]]; then
+  set_setting 'Preferences' 'Connection\GlobalDLLimit' "$QB_LIMIT_DL"
+fi
+
+if [[ ! -z "$QB_LIMIT_UP" ]]; then
+  set_setting 'Preferences' 'Connection\GlobalUPLimit' "$QB_LIMIT_UP"
+fi
+
+if [[ ! -z "$QB_LIMIT_ALT_DL" ]]; then
+  set_setting 'Preferences' 'Connection\GlobalDLLimitAlt' "$QB_LIMIT_ALT_DL"
+fi
+
+if [[ ! -z "$QB_LIMIT_ALT_UP" ]]; then
+  set_setting 'Preferences' 'Connection\GlobalUPLimitAlt' "$QB_LIMIT_ALT_UP"
+fi

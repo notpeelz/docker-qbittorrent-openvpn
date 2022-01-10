@@ -3,6 +3,22 @@ ARG ALPINE_VERSION=3.14
 # stage: download dependencies
 FROM alpine:${ALPINE_VERSION} as builder
 
+# qb-web
+ARG QBWEB_REPO=https://github.com/CzBiX/qb-web.git
+ARG QBWEB_REV=nightly-20210808
+RUN apk add --update --no-cache \
+  git \
+  nodejs \
+  npm
+RUN git config --global init.defaultBranch master \
+  && git init /tmp/qbweb \
+  && cd /tmp/qbweb \
+  && git remote add origin ${QBWEB_REPO} \
+  && git fetch --tags --depth=1 origin ${QBWEB_REV} \
+  && git -c advice.detachedHead=false checkout ${QBWEB_REV} \
+  && npm install \
+  && npm run build
+
 # vuetorrent
 ARG VUETORRENT_RELEASE=https://github.com/WDaan/VueTorrent/archive/latest-release.tar.gz
 ADD ${VUETORRENT_RELEASE} /tmp/vuetorrent.tar.gz
@@ -31,6 +47,7 @@ RUN apk add --update --no-cache \
   && pip install --no-cache-dir crudini
 
 COPY --from=builder /tmp/vuetorrent/VueTorrent-latest-release /vuetorrent
+COPY --from=builder /tmp/qbweb/dist /qbweb
 COPY --from=builder /tmp/qbittorrent-nox /usr/bin/qbittorrent-nox
 
 ENV SET_UIDGID=0:0 \

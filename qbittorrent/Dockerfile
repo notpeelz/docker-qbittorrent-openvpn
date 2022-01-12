@@ -27,8 +27,8 @@ RUN mkdir /tmp/vuetorrent \
 
 # qbittorrent-nox
 ARG QBITTORRENT_ARCH=x86_64
-ARG QBITTORRENT_VERSION=4.3.9
-ARG LIBTORRENT_VERSION=2.0.4
+ARG QBITTORRENT_VERSION=4.4.0
+ARG LIBTORRENT_VERSION=2.0.5
 ARG QBITTORRENT_RELEASE=https://github.com/userdocs/qbittorrent-nox-static/releases/download/release-${QBITTORRENT_VERSION}_v${LIBTORRENT_VERSION}/${QBITTORRENT_ARCH}-cmake-icu-qbittorrent-nox
 ADD ${QBITTORRENT_RELEASE} /tmp/qbittorrent-nox
 RUN chmod +x /tmp/qbittorrent-nox

@@ -4,8 +4,8 @@
 rm -rf /certs
 cp /mnt/certs /certs -R
 
-if [[ ! "$SET_UIDGID" =~ ^[0-9]+:[0-9]*$ ]]; then
-  echo "ERROR: \$SET_UIDGID is not valid"
+if [[ ! "$UIDGID" =~ ^[0-9]+:[0-9]*$ ]]; then
+  echo "ERROR: \$UIDGID is not valid"
   exit 1
 fi
 
@@ -19,7 +19,7 @@ if ! (echo "$mounts" | grep -q '^/downloads$'); then
   exit 1
 fi
 
-chown "$SET_UIDGID" /certs -R
+chown "$UIDGID" /certs -R
 
 config_dir="/config/qBittorrent/config"
 mkdir -p "$config_dir"
@@ -28,7 +28,7 @@ config_file="$config_dir/qBittorrent.conf"
 if [[ ! -s "$config_file" ]]; then
   echo "config file doesn't exist; copying default config file"
   cp /data/config/qBittorrent/qBittorrent.conf "$config_file"
-  chown "$SET_UIDGID" "$config_file"
+  chown "$UIDGID" "$config_file"
 fi
 
 set_setting() {

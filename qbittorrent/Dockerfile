@@ -50,7 +50,7 @@ COPY --from=builder /tmp/vuetorrent/VueTorrent-latest-release /vuetorrent
 COPY --from=builder /tmp/qbweb/dist /qbweb
 COPY --from=builder /tmp/qbittorrent-nox /usr/bin/qbittorrent-nox
 
-ENV SET_UIDGID=0:0 \
+ENV UIDGID=0:0 \
   QBT_PORTABLE=1 \
   QBT_PROFILE=/config \
   QBT_SAVE_PATH=/downloads \

@@ -14,8 +14,8 @@ services:
     container_name: vps-torrent-qbittorrent
     environment:
       - TZ=America/New_York
-      - SET_UIDGDID=1000:1000
-      - SET_UMASK=027
+      - UIDGID=1000:1000
+      - UMASK=027
       # valid options: default, vuetorrent, qbweb
       - WEBUI_ALTERNATIVE=vuetorrent
       - WEBUI_HTTPS=1

@@ -1,12 +1,12 @@
 #!/usr/bin/with-contenv /bin/bash
 # vim:ft=sh
 
-if [[ ! -z "${SET_UMASK:+x}" ]]; then
-  umask "$SET_UMASK"
+if [[ ! -z "${UMASK:+x}" ]]; then
+  umask "$UMASK"
 fi
 
-if [[ ! -z "${SET_UIDGID:+x}" ]]; then
-  exec s6-setuidgid "$SET_UIDGID" qbittorrent-nox --webui-port="$WEBUI_PORT"
+if [[ ! -z "${UIDGID:+x}" ]]; then
+  exec s6-setuidgid "$UIDGID" qbittorrent-nox --webui-port="$WEBUI_PORT"
 else
   exec qbittorrent-nox --webui-port="$WEBUI_PORT"
 fi

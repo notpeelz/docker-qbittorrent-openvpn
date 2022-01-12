@@ -25,8 +25,8 @@ services:
       driver: journald
     network_mode: service:openvpn
     environment:
-      - SET_UIDGID=1000:1000
-      - SET_UMASK=022
+      - UIDGID=1000:1000
+      - UMASK=022
       - TZ=America/New_York
       - WEBUI_PORT=8080
     volumes:

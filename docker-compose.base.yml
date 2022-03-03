@@ -8,8 +8,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
   openvpn:
     build: ./openvpn
-    logging:
-      driver: journald
     cap_add:
       - NET_ADMIN
     environment:
@@ -21,8 +19,6 @@ services:
     restart: unless-stopped
   qbittorrent:
     build: ./qbittorrent
-    logging:
-      driver: journald
     network_mode: service:openvpn
     environment:
       - UIDGID=1000:1000

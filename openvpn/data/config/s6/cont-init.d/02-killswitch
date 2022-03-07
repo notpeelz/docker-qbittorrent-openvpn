@@ -7,8 +7,8 @@ is_ip() {
 
 config_file="/data/vpn/${OPENVPN_CONFIG_FILE}"
 
-default_gateway=$(ip r | grep 'default via' | cut -d " " -f 3)
-local_subnet=$(ip r | grep -v 'default via' | grep eth0 | tail -n 1 | cut -d " " -f 1)
+default_gateway="$(ip r | grep 'default via' | cut -d " " -f 3)"
+local_subnet="$(ip r | grep -v 'default via' | grep eth0 | tail -n 1 | cut -d " " -f 1)"
 
 # allow established and related connections
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
@@ -31,14 +31,14 @@ for subnet in ${SUBNETS//,/ }; do
 done
 
 # allowing remote servers in configuration file
-remote_port=$(grep "port " "$config_file" | cut -d' ' -f2)
-remote_proto=$(grep "proto " "$config_file" | cut -d' ' -f2 | cut -c1-3)
-remotes=$(grep "remote " "$config_file" | cut -d' ' -f2-4)
+remote_port="$(grep "port " "$config_file" | cut -d' ' -f2)"
+remote_proto="$(grep "proto " "$config_file" | cut -d' ' -f2 | cut -c1-3)"
+remotes="$(grep "remote " "$config_file" | cut -d' ' -f2-4)"
 
 echo "  Using:"
 echo "${remotes}" | while IFS= read -r line; do
   # strip any comments from line that could mess up cuts
-  clean_line=${line%% #*}
+  clean_line="${line%% #*}"
   addr="$(echo "$clean_line" | cut -d' ' -f1)"
   port="$(echo "$clean_line" | cut -s -d' ' -f2)"
   proto="$(echo "$clean_line" | cut -s -d' ' -f3 | cut -c1-3)"

@@ -77,9 +77,9 @@ else
 fi
 
 if [[ ! -z "$QB_PEER_PORT" ]]; then
-  set_setting 'Preferences' 'Connection\PortRangeMin' "$QB_PEER_PORT"
+  set_setting 'BitTorrent' 'Session\Port' "$QB_PEER_PORT"
 else
-  set_setting 'Preferences' 'Connection\PortRangeMin' 6881
+  set_setting 'BitTorrent' 'Session\Port' 6881
 fi
 
 if [[ "$QB_DHT" == "1" ]]; then

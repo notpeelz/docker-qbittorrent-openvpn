@@ -5,11 +5,15 @@ services:
     container_name: vps-torrent-openvpn
     environment:
       - OPENVPN_CONFIG_FILE=vpn.conf
+      - SUBNETS=10.88.23.0/24,10.88.24.0/24
     ports:
       # port for incoming torrent connections
       - 6881:6881
       # webui port
       - 8080:8080
+    networks:
+      portal:
+        ipv4_address: 10.88.23.10
   qbittorrent:
     container_name: vps-torrent-qbittorrent
     environment:
@@ -17,8 +21,9 @@ services:
       - UIDGID=1000:1000
       - UMASK=027
       # valid options: default, vuetorrent, qbweb
-      - WEBUI_ALTERNATIVE=vuetorrent
+      - WEBUI_ALTERNATIVE=default
       - WEBUI_HTTPS=1
+      - WEBUI_PORT=443
       - WEBUI_AUTH=1
       - WEBUI_USER=admin
       # use hash-password.sh to generate the hash
@@ -34,3 +39,33 @@ services:
     volumes:
       - /mnt/.torrents_config:/config
       - /mnt/torrents:/downloads
+  wireguard:
+    container_name: vps-torrent-portal-wg
+    image: lscr.io/linuxserver/wireguard:latest
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - UMASK=027
+      - PUID=1000
+      - PGID=1000
+      - SERVERURL=your-domain-here.com
+      - INTERNAL_SUBNET=10.88.24.0
+      - PEERS=user1,user2,user3
+      - ALLOWEDIPS=10.88.23.0/24
+      - TZ=America/New_York
+    volumes:
+      - ./wireguard-config:/config
+    ports:
+      - 51820/udp
+    networks:
+      - portal
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+
+networks:
+  portal:
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.88.23.0/24"

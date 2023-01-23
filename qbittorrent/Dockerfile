@@ -63,6 +63,4 @@ COPY ./data /data
 COPY ./data/config/s6/cont-init.d /etc/cont-init.d
 COPY ./data/config/s6/services.d /etc/services.d
 
-EXPOSE 8080
-
 ENTRYPOINT /init

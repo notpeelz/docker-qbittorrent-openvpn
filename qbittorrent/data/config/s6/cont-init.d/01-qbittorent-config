@@ -42,19 +42,6 @@ set_setting() {
   crudini --inplace --set "$config_file" "$section" "$key" "$value"
 }
 
-if [[ "$WEBUI_ALTERNATIVE" == "vuetorrent" ]]; then
-  set_setting 'Preferences' 'WebUI\AlternativeUIEnabled' true
-  set_setting 'Preferences' 'WebUI\RootFolder' '/vuetorrent/'
-elif [[ "$WEBUI_ALTERNATIVE" == "qbweb" ]]; then
-  set_setting 'Preferences' 'WebUI\AlternativeUIEnabled' true
-  set_setting 'Preferences' 'WebUI\RootFolder' '/qbweb/'
-else
-  if [[ ! -z "$WEBUI_ALTERNATIVE" && "$WEBUI_ALTERNATIVE" != "default" ]]; then
-    echo "WARNING: unknown \$WEBUI_ALTERNATIVE value; disabling alternative Web UI"
-  fi
-  set_setting 'Preferences' 'WebUI\AlternativeUIEnabled' false
-fi
-
 if [[ "$WEBUI_HTTPS" == "1" ]]; then
   set_setting 'Preferences' 'WebUI\HTTPS\Enabled' true
 else

@@ -20,8 +20,6 @@ services:
       - TZ=America/New_York
       - UIDGID=1000:1000
       - UMASK=027
-      # valid options: default, vuetorrent, qbweb
-      - WEBUI_ALTERNATIVE=default
       - WEBUI_HTTPS=1
       - WEBUI_PORT=443
       - WEBUI_AUTH=1

@@ -1,4 +1,4 @@
-FROM alpine:3.14
+FROM alpine:3.17
 
 ENV KILL_SWITCH=on \
   VPN_LOG_LEVEL=3 \

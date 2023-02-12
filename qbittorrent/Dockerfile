@@ -1,4 +1,4 @@
-ARG ALPINE_VERSION=3.14
+ARG ALPINE_VERSION=3.17
 
 # stage: download dependencies
 FROM alpine:${ALPINE_VERSION} as builder

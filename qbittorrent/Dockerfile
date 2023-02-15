@@ -5,7 +5,7 @@ FROM alpine:${ALPINE_VERSION} as builder
 
 # qbittorrent-nox
 ARG QBITTORRENT_ARCH=x86_64
-ARG QBITTORRENT_VERSION=4.5.0
+ARG QBITTORRENT_VERSION=4.5.1
 ARG LIBTORRENT_VERSION=2.0.8
 ARG QBITTORRENT_RELEASE=https://github.com/userdocs/qbittorrent-nox-static/releases/download/release-${QBITTORRENT_VERSION}_v${LIBTORRENT_VERSION}/${QBITTORRENT_ARCH}-qbittorrent-nox
 ADD ${QBITTORRENT_RELEASE} /tmp/qbittorrent-nox

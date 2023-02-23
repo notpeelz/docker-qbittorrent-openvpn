@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv /bin/bash
 # vim:ft=sh
 
+set -Eeuo pipefail
+
 rm -rf /data/vpn
 cp /mnt/vpn-config /data/vpn -r
 

@@ -5,12 +5,10 @@ services:
     container_name: vps-torrent-openvpn
     environment:
       - OPENVPN_CONFIG_FILE=vpn.conf
-      - SUBNETS=10.88.23.0/24,10.88.24.0/24
+      - SUBNETS=10.88.23.0/24
     ports:
       # port for incoming torrent connections
       - 6881:6881
-      # webui port
-      - 8080:8080
     networks:
       portal:
         ipv4_address: 10.88.23.10
@@ -30,10 +28,10 @@ services:
       - QB_PEX=1
       - QB_LSD=0
       - QB_ANONYMOUS=1
-      - QB_LIMIT_DL=3000
-      - QB_LIMIT_UP=100
-      - QB_LIMIT_ALT_DL=1500
-      - QL_LIMIT_ALT_UP=100
+      # - QB_LIMIT_DL=3000
+      # - QB_LIMIT_UP=100
+      # - QB_LIMIT_ALT_DL=1500
+      # - QL_LIMIT_ALT_UP=100
     volumes:
       - /mnt/.torrents_config:/config
       - /mnt/torrents:/downloads
@@ -56,6 +54,7 @@ services:
     ports:
       - 51820/udp
     networks:
+      - default
       - portal
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
@@ -63,6 +62,7 @@ services:
 
 networks:
   portal:
+    name: vps-torrent-portal
     ipam:
       driver: default
       config:

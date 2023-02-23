@@ -7,7 +7,7 @@ rm -rf /data/vpn
 cp /mnt/vpn-config /data/vpn -r
 
 config_file="/data/vpn/${OPENVPN_CONFIG_FILE}"
-if [ -z "$config_file" ]; then
+if [ ! -s "$config_file" ]; then
   >&2 echo "ERROR: \$OPENVPN_CONFIG_FILE not found"
   exit 1
 fi

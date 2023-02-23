@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv /bin/bash
 # vim:ft=sh
 
+set -Eeuo pipefail
+
 rm -rf /certs
 cp /mnt/certs /certs -R
 
@@ -42,13 +44,13 @@ set_setting() {
   crudini --inplace --set "$config_file" "$section" "$key" "$value"
 }
 
-if [[ "$WEBUI_HTTPS" == "1" ]]; then
+if [[ "${WEBUI_HTTPS:-}" == "1" ]]; then
   set_setting 'Preferences' 'WebUI\HTTPS\Enabled' true
 else
   set_setting 'Preferences' 'WebUI\HTTPS\Enabled' false
 fi
 
-if [[ "$WEBUI_AUTH" == "0" ]]; then
+if [[ "${WEBUI_AUTH:-}" == "0" ]]; then
   set_setting 'Preferences' 'WebUI\AuthSubnetWhitelist' '0.0.0.0/0'
   set_setting 'Preferences' 'WebUI\AuthSubnetWhitelistEnabled' true
 else
@@ -63,48 +65,48 @@ else
   set_setting 'Preferences' 'WebUI\Password_PBKDF2' "$pass"
 fi
 
-if [[ ! -z "$QB_PEER_PORT" ]]; then
+if [[ ! -z "${QB_PEER_PORT:-}" ]]; then
   set_setting 'BitTorrent' 'Session\Port' "$QB_PEER_PORT"
 else
   set_setting 'BitTorrent' 'Session\Port' 6881
 fi
 
-if [[ "$QB_DHT" == "1" ]]; then
+if [[ "${QB_DHT:-}" == "1" ]]; then
   set_setting 'Preferences' 'Bittorrent\DHT' true
 else
   set_setting 'Preferences' 'Bittorrent\DHT' false
 fi
 
-if [[ "$QB_LSD" == "1" ]]; then
+if [[ "${QB_LSD:-}" == "1" ]]; then
   set_setting 'Preferences' 'Bittorrent\LSD' true
 else
   set_setting 'Preferences' 'Bittorrent\LSD' false
 fi
 
-if [[ "$QB_PEX" == "1" ]]; then
+if [[ "${QB_PEX:-}" == "1" ]]; then
   set_setting 'Preferences' 'Bittorrent\PeX' true
 else
   set_setting 'Preferences' 'Bittorrent\PeX' false
 fi
 
-if [[ "$QB_ANONYMOUS" == "0" ]]; then
+if [[ "${QB_ANONYMOUS:-}" == "0" ]]; then
   set_setting 'Preferences' 'Advanced\AnonymousMode' false
 else
   set_setting 'Preferences' 'Advanced\AnonymousMode' true
 fi
 
-if [[ ! -z "$QB_LIMIT_DL" ]]; then
+if [[ ! -z "${QB_LIMIT_DL:-}" ]]; then
   set_setting 'Preferences' 'Connection\GlobalDLLimit' "$QB_LIMIT_DL"
 fi
 
-if [[ ! -z "$QB_LIMIT_UP" ]]; then
+if [[ ! -z "${QB_LIMIT_UP:-}" ]]; then
   set_setting 'Preferences' 'Connection\GlobalUPLimit' "$QB_LIMIT_UP"
 fi
 
-if [[ ! -z "$QB_LIMIT_ALT_DL" ]]; then
+if [[ ! -z "${QB_LIMIT_ALT_DL:-}" ]]; then
   set_setting 'Preferences' 'Connection\GlobalDLLimitAlt' "$QB_LIMIT_ALT_DL"
 fi
 
-if [[ ! -z "$QB_LIMIT_ALT_UP" ]]; then
+if [[ ! -z "${QB_LIMIT_ALT_UP:-}" ]]; then
   set_setting 'Preferences' 'Connection\GlobalUPLimitAlt' "$QB_LIMIT_ALT_UP"
 fi

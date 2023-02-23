@@ -7,7 +7,7 @@ if ! (echo "$VPN_LOG_LEVEL" | grep -Eq '^([1-9]|1[0-1])$'); then
   echo "WARNING: invalid \$VPN_LOG_LEVEL"
   vpn_log_level=3
 else
-  vpn_log_level=$VPN_LOG_LEVEL
+  vpn_log_level="$VPN_LOG_LEVEL"
 fi
 
 config_file="/data/vpn/${OPENVPN_CONFIG_FILE}"

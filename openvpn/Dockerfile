@@ -9,6 +9,7 @@ RUN apk add --update --no-cache \
   bash \
   s6-overlay \
   bind-tools \
+  iptables \
   openvpn
 
 # deploy our files

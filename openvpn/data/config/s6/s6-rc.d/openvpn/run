@@ -10,7 +10,7 @@ else
   vpn_log_level="$VPN_LOG_LEVEL"
 fi
 
-config_file="/data/vpn/${OPENVPN_CONFIG_FILE}"
+config_file="/run/data/vpn/${OPENVPN_CONFIG_FILE}"
 exec openvpn --config "$config_file" \
   --verb "$vpn_log_level" \
   --auth-nocache \
@@ -19,4 +19,4 @@ exec openvpn --config "$config_file" \
   --pull-filter ignore "ifconfig-ipv6" \
   --script-security 2 \
   --up-restart \
-  --cd /data/vpn
+  --cd /run/data/vpn

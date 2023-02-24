@@ -11,7 +11,7 @@ is_ip() {
   echo "$1" | grep -Eq "[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*"
 }
 
-config_file="/data/vpn/${OPENVPN_CONFIG_FILE}"
+config_file="/run/data/vpn/${OPENVPN_CONFIG_FILE}"
 
 default_gateway="$(ip r | grep 'default via' | cut -d' ' -f3)"
 local_subnet="$(ip r | grep -v 'default via' | grep eth0 | tail -n1 | cut -d' ' -f1)"

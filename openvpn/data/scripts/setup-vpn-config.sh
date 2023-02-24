@@ -3,10 +3,10 @@
 
 set -Eeuo pipefail
 
-rm -rf /data/vpn
-cp /mnt/vpn-config /data/vpn -r
+mkdir -p /run/data/vpn
+cp /mnt/vpn-config/. /run/data/vpn -r
 
-config_file="/data/vpn/${OPENVPN_CONFIG_FILE}"
+config_file="/run/data/vpn/${OPENVPN_CONFIG_FILE}"
 if [ ! -s "$config_file" ]; then
   >&2 echo "ERROR: \$OPENVPN_CONFIG_FILE not found"
   exit 1

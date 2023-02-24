@@ -3,8 +3,8 @@
 
 set -Eeuo pipefail
 
-rm -rf /certs
-cp /mnt/certs /certs -R
+mkdir -p /run/data/certs
+cp /mnt/certs/. /run/data/certs -R
 
 if [[ ! "$UIDGID" =~ ^[0-9]+:[0-9]*$ ]]; then
   echo "ERROR: \$UIDGID is not valid"
@@ -21,7 +21,7 @@ if ! (echo "$mounts" | grep -q '^/downloads$'); then
   exit 1
 fi
 
-chown "$UIDGID" /certs -R
+chown "$UIDGID" /run/data/certs -R
 
 config_dir="/config/qBittorrent/config"
 mkdir -p "$config_dir"
@@ -29,7 +29,7 @@ mkdir -p "$config_dir"
 config_file="$config_dir/qBittorrent.conf"
 if [[ ! -s "$config_file" ]]; then
   echo "config file doesn't exist; copying default config file"
-  cp /data/config/qBittorrent/qBittorrent.conf "$config_file"
+  cp /run/data/config/qBittorrent/qBittorrent.conf "$config_file"
   chown "$UIDGID" "$config_file"
 fi
 

@@ -7,6 +7,10 @@ info() {
   printf "killswitch: %s\n" "$1"
 }
 
+error() {
+  printf "killswitch: ERROR: %s\n" "$1"
+}
+
 is_ip() {
   echo "$1" | grep -Eq "[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*"
 }
@@ -62,6 +66,10 @@ echo "${remotes}" | while IFS= read -r line; do
     iptables -A OUTPUT -o eth0 -d "$addr" -p "${proto}" --dport "${port}" -j ACCEPT
   else
     for ip in $(dig -4 +short "$addr"); do
+      if ! is_ip "$ip"; then
+        error "dig resolved an invalid IPv4 address: $addr -> $ip"
+        exit 1
+      fi
       info "$addr (IP: $ip PORT: $port PROTO: $proto)"
       iptables -A OUTPUT -o eth0 -d "$ip" -p "${proto}" --dport "${port}" -j ACCEPT
     done

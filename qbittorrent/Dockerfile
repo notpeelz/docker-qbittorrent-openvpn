@@ -1,5 +1,10 @@
 FROM alpine:3.17
 
+# If any dependencies fail, the entire supervision tree should fail
+ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
+# Prevent services from timing out
+ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
+
 ARG QBITTORRENT_ARCH=x86_64
 ARG QBITTORRENT_VERSION=4.5.1
 ARG LIBTORRENT_VERSION=2.0.8

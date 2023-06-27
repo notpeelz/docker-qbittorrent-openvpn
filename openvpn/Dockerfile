@@ -1,9 +1,10 @@
 FROM alpine:3.17
 
-ENV KILL_SWITCH=on \
-  VPN_LOG_LEVEL=3 \
-  HTTP_PROXY=off \
-  SOCKS_PROXY=off
+ENV VPN_LOG_LEVEL=3
+# If any dependencies fail, the entire supervision tree should fail
+ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
+# Prevent services from timing out
+ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
 
 RUN apk add --update --no-cache \
   bash \

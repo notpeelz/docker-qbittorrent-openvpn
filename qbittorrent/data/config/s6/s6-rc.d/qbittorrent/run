@@ -1,6 +1,14 @@
 #!/usr/bin/with-contenv /bin/bash
 # vim:ft=sh
 
+set -Eeuo pipefail
+
+# The openvpn service shares our network namespace, so we end up inheriting
+# their iptable rules. This prevents leaks until openvpn is ready.
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+
 if [[ ! -z "${UMASK:+x}" ]]; then
   umask "$UMASK"
 fi

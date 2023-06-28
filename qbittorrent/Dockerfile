@@ -16,6 +16,7 @@ RUN apk add --update --no-cache \
   bash \
   s6-overlay \
   curl \
+  iptables \
   iproute2-minimal \
   python3 \
   py-pip \

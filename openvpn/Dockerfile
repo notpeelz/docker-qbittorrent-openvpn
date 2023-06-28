@@ -22,6 +22,4 @@ COPY ./data /data
 COPY ./data/config/s6/s6-rc.d /etc/s6-overlay/s6-rc.d
 COPY ./data/scripts /scripts
 
-HEALTHCHECK CMD ping -c 3 1.1.1.1 || exit 1
-
 ENTRYPOINT /init

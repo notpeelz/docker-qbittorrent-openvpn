@@ -17,6 +17,8 @@ services:
     restart: unless-stopped
   qbittorrent:
     build: ./qbittorrent
+    cap_add:
+      - NET_ADMIN
     network_mode: service:openvpn
     environment:
       - UIDGID=1000:1000

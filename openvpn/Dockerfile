@@ -1,4 +1,4 @@
-FROM alpine:3.17
+FROM alpine:3.18
 
 ENV VPN_LOG_LEVEL=3
 # If any dependencies fail, the entire supervision tree should fail

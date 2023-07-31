@@ -1,4 +1,4 @@
-FROM alpine:3.17
+FROM alpine:3.18
 
 # If any dependencies fail, the entire supervision tree should fail
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
